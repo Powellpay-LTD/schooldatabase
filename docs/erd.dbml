@@ -35,9 +35,9 @@ Table enrollment {
   status varchar
 }
 
-// =====================
+
 // PEOPLE DOMAIN (LEFT SIDE)
-// =====================
+
 
 Table student {
   id int [pk, increment]
@@ -74,9 +74,9 @@ Table staff {
   role_id int
 }
 
-// =====================
+
 // ACADEMIC CONTENT (RIGHT SIDE)
-// =====================
+
 
 Table subject {
   id int [pk, increment]
@@ -122,9 +122,9 @@ Table generic_skill {
   rating varchar
 }
 
-// =====================
+
 // FINANCE + SERVICES (BOTTOM)
-// =====================
+
 
 Table fee_structure {
   id int [pk, increment]
@@ -174,9 +174,9 @@ Table announcement {
   date_posted date
 }
 
-// =====================
+
 // RELATIONSHIPS (CLEANED ORDER)
-// =====================
+
 
 // Academic Core
 Ref: term.academic_year_id > academic_year.id
