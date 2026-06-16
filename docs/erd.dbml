@@ -1,0 +1,225 @@
+
+Table academic_year {
+  id int [pk, increment]
+  name varchar
+  start_date date
+  end_date date
+  active boolean
+}
+
+Table term {
+  id int [pk, increment]
+  academic_year_id int
+  name varchar
+  start_date date
+  end_date date
+}
+
+Table class_level {
+  id int [pk, increment]
+  name varchar
+}
+
+Table stream {
+  id int [pk, increment]
+  class_level_id int
+  name varchar
+}
+
+Table enrollment {
+  id int [pk, increment]
+  student_id int
+  academic_year_id int
+  class_level_id int
+  stream_id int
+  status varchar
+}
+
+// =====================
+// PEOPLE DOMAIN (LEFT SIDE)
+// =====================
+
+Table student {
+  id int [pk, increment]
+  first_name varchar
+  last_name varchar
+  gender varchar
+  dob date
+  admission_no varchar [unique]
+}
+
+Table guardian {
+  id int [pk, increment]
+  full_name varchar
+  phone varchar
+  email varchar
+  relationship varchar
+}
+
+Table student_guardian {
+  student_id int
+  guardian_id int
+}
+
+Table role {
+  id int [pk, increment]
+  name varchar
+}
+
+Table staff {
+  id int [pk, increment]
+  full_name varchar
+  phone varchar
+  email varchar
+  role_id int
+}
+
+// =====================
+// ACADEMIC CONTENT (RIGHT SIDE)
+// =====================
+
+Table subject {
+  id int [pk, increment]
+  name varchar
+}
+
+Table exam {
+  id int [pk, increment]
+  name varchar
+  term_id int
+}
+
+Table subject_assignment {
+  id int [pk, increment]
+  staff_id int
+  subject_id int
+  class_level_id int
+  stream_id int
+  term_id int
+}
+
+Table result {
+  id int [pk, increment]
+  student_id int
+  subject_id int
+  exam_id int
+  marks int
+}
+
+Table attendance {
+  id int [pk, increment]
+  student_id int
+  term_id int
+  date date
+  status varchar
+}
+
+Table generic_skill {
+  id int [pk, increment]
+  student_id int
+  term_id int
+  skill varchar
+  rating varchar
+}
+
+// =====================
+// FINANCE + SERVICES (BOTTOM)
+// =====================
+
+Table fee_structure {
+  id int [pk, increment]
+  academic_year_id int
+  class_level_id int
+  amount decimal
+}
+
+Table payment {
+  id int [pk, increment]
+  student_id int
+  fee_structure_id int
+  amount_paid decimal
+  payment_date date
+  method varchar
+}
+
+Table discipline_record {
+  id int [pk, increment]
+  student_id int
+  date date
+  description text
+  action_taken text
+}
+
+Table library_item {
+  id int [pk, increment]
+  title varchar
+  author varchar
+  copies int
+}
+
+Table library_loan {
+  id int [pk, increment]
+  student_id int
+  library_item_id int
+  borrow_date date
+  return_date date
+}
+
+Table announcement {
+  id int [pk, increment]
+  staff_id int
+  academic_year_id int
+  title varchar
+  message text
+  date_posted date
+}
+
+// =====================
+// RELATIONSHIPS (CLEANED ORDER)
+// =====================
+
+// Academic Core
+Ref: term.academic_year_id > academic_year.id
+Ref: stream.class_level_id > class_level.id
+Ref: enrollment.student_id > student.id
+Ref: enrollment.academic_year_id > academic_year.id
+Ref: enrollment.class_level_id > class_level.id
+Ref: enrollment.stream_id > stream.id
+
+// People
+Ref: staff.role_id > role.id
+Ref: student_guardian.student_id > student.id
+Ref: student_guardian.guardian_id > guardian.id
+
+// Academic Content
+Ref: exam.term_id > term.id
+Ref: subject_assignment.staff_id > staff.id
+Ref: subject_assignment.subject_id > subject.id
+Ref: subject_assignment.class_level_id > class_level.id
+Ref: subject_assignment.stream_id > stream.id
+Ref: subject_assignment.term_id > term.id
+
+Ref: result.student_id > student.id
+Ref: result.subject_id > subject.id
+Ref: result.exam_id > exam.id
+
+Ref: attendance.student_id > student.id
+Ref: attendance.term_id > term.id
+
+Ref: generic_skill.student_id > student.id
+Ref: generic_skill.term_id > term.id
+
+// Finance
+Ref: fee_structure.academic_year_id > academic_year.id
+Ref: fee_structure.class_level_id > class_level.id
+
+Ref: payment.student_id > student.id
+Ref: payment.fee_structure_id > fee_structure.id
+
+Ref: discipline_record.student_id > student.id
+
+Ref: library_loan.student_id > student.id
+Ref: library_loan.library_item_id > library_item.id
+
+Ref: announcement.staff_id > staff.id
+Ref: announcement.academic_year_id > academic_year.id
