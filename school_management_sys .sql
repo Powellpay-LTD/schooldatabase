@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 11, 2026 at 07:19 PM
+-- Generation Time: Jun 16, 2026 at 11:30 AM
 -- Server version: 8.4.7
 -- PHP Version: 8.3.28
 
@@ -213,6 +213,7 @@ CREATE TABLE IF NOT EXISTS `payments` (
   `payments_id` int NOT NULL AUTO_INCREMENT,
   `payment_code` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'unique format PAY-YYYY-000001(start with PAY the the yrear fllowed by a 6 digit value',
   `student_id` int NOT NULL,
+  `term_id` int NOT NULL,
   `amount_paid` decimal(10,2) NOT NULL,
   `payment_date` date NOT NULL,
   `payment_method` enum('Cash','Mobile Money','Bank','Cheque') COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -225,17 +226,17 @@ CREATE TABLE IF NOT EXISTS `payments` (
 -- Dumping data for table `payments`
 --
 
-INSERT INTO `payments` (`payments_id`, `payment_code`, `student_id`, `amount_paid`, `payment_date`, `payment_method`, `reference_number`) VALUES
-(1, 'PAY-2026-000001', 1, 100000.00, '2026-01-06', 'Cash', 'TID001'),
-(2, 'PAY-2026-000002', 2, 200000.00, '2026-02-10', 'Mobile Money', 'TID002'),
-(3, 'PAY-2026-000003', 3, 55000.00, '2026-04-15', 'Bank', 'TID003'),
-(4, 'PAY-2025-000001', 4, 123000.00, '2026-02-12', 'Cheque', 'TID004'),
-(5, 'PAY-2025-000002', 5, 250000.00, '2026-04-15', 'Cheque', 'TID005'),
-(6, 'PAY-2025-000003', 6, 199000.00, '2026-03-27', 'Bank', 'TID006'),
-(7, 'PAY-2023-000001', 7, 99000.00, '2026-03-02', 'Cash', 'TID007'),
-(8, 'PAY-2023-000002', 8, 120000.00, '2026-06-01', 'Mobile Money', 'TID008'),
-(9, 'PAY-2020-000001', 9, 230000.00, '2026-05-01', 'Cheque', 'TID009'),
-(10, 'PAY-2020-000002', 10, 190000.00, '2026-06-09', 'Cheque', 'TID010');
+INSERT INTO `payments` (`payments_id`, `payment_code`, `student_id`, `term_id`, `amount_paid`, `payment_date`, `payment_method`, `reference_number`) VALUES
+(1, 'PAY-2026-000001', 1, 1, 100000.00, '2026-01-06', 'Cash', 'TID001'),
+(2, 'PAY-2026-000002', 2, 2, 200000.00, '2026-02-10', 'Mobile Money', 'TID002'),
+(3, 'PAY-2026-000003', 3, 3, 55000.00, '2026-04-15', 'Bank', 'TID003'),
+(4, 'PAY-2025-000001', 4, 1, 123000.00, '2026-02-12', 'Cheque', 'TID004'),
+(5, 'PAY-2025-000002', 5, 2, 250000.00, '2026-04-15', 'Cheque', 'TID005'),
+(6, 'PAY-2025-000003', 6, 3, 199000.00, '2026-03-27', 'Bank', 'TID006'),
+(7, 'PAY-2023-000001', 7, 1, 99000.00, '2026-03-02', 'Cash', 'TID007'),
+(8, 'PAY-2023-000002', 8, 2, 120000.00, '2026-06-01', 'Mobile Money', 'TID008'),
+(9, 'PAY-2020-000001', 9, 3, 230000.00, '2026-05-01', 'Cheque', 'TID009'),
+(10, 'PAY-2020-000002', 10, 2, 190000.00, '2026-06-09', 'Cheque', 'TID010');
 
 -- --------------------------------------------------------
 
@@ -272,6 +273,14 @@ CREATE TABLE IF NOT EXISTS `staff` (
   PRIMARY KEY (`staff_id`),
   UNIQUE KEY `staff_number` (`staff_number`)
 ) ;
+
+--
+-- Dumping data for table `staff`
+--
+
+INSERT INTO `staff` (`staff_id`, `staff_number`, `name`, `role`, `phone`, `email`, `hire_date`) VALUES
+(1, 'TCH001', 'WANGI BRIAN', 'Teacher', '0777123123', 'wangibrian@gmail.com', '2016-01-12'),
+(2, 'BUR009', 'MILLY JESCA', 'Bursar', '0772345678', 'millyj@gmail.com', '2025-05-05');
 
 -- --------------------------------------------------------
 
