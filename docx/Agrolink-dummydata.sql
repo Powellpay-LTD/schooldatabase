@@ -1,14 +1,6 @@
--- =====================================================
--- STUDENT DATA FROM AGROLINK
--- Generated: 2026-06-17
--- Total Records: 50 students (first batch)
--- Database: SQLite
--- =====================================================
 
--- Drop table if it exists
 DROP TABLE IF EXISTS students;
 
--- Create the students table
 CREATE TABLE students (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     student_name TEXT,
@@ -47,10 +39,7 @@ CREATE TABLE students (
     created_by TEXT
 );
 
--- =====================================================
--- INSERT STUDENT DATA (50 records - S4 Class 2017)
--- All missing values set to '0' as requested
--- =====================================================
+-- INSERT STUDENT DATA 
 
 INSERT INTO students (
     student_name, student_age, student_gender, nationality, religion, 
