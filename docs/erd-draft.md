@@ -127,7 +127,47 @@ BookLoan can reference either a Student or a Staff as the borrower (union type).
 
 ---
 
-## 3. Entity-Relationship Diagram
+## 3. EER diagram — module breakdown
+
+The full ER diagram is broken into 8 focused sub-diagrams by domain module.
+Each diagram shows only the entities directly within that module and their
+immediate relationships.
+
+### 3.1 Core Academic Structure
+
+![Core Academic](module-01-core.png)
+
+### 3.2 People Management
+
+![People Management](module-02-people.png)
+
+### 3.3 Staff Assignments
+
+![Staff Assignments](module-03-staff-assignments.png)
+
+### 3.4 Finance
+
+![Finance](module-04-finance.png)
+
+### 3.5 Academics & Assessment
+
+![Academics & Assessment](module-05-academics.png)
+
+### 3.6 Daily Operations
+
+![Daily Operations](module-06-daily-ops.png)
+
+### 3.7 Student Lifecycle
+
+![Student Lifecycle](module-07-lifecycle.png)
+
+### 3.8 Timetable
+
+![Timetable](module-08-timetable.png)
+
+---
+
+## 4. Entity-Relationship Diagram (full reference)
 
 ```mermaid
 erDiagram
@@ -175,113 +215,15 @@ erDiagram
     subjects ||--o{ books : categorized
 
     fee_types ||--o{ fee_structure : categorized_as
-
-    fee_structure ||--o{ payments : billed_against
-
-    payments ||--|| payment_receipts : generates
-
-    exams ||--o{ exam_results : produces
-
-    books ||--o{ book_loans : loaned
-
-    generic_skills ||--o{ skill_assessments : rated_in
-
-    subjects ||--o{ learning_outcomes : defines
-```
-
----
-
-## 4. Module Breakdown (sub-diagrams)
-
-### 4.1 Core Academic Structure
-
-```mermaid
-erDiagram
-    academic_years ||--o{ terms : contains
-    terms ||--o{ enrollments : belongs_to
-    classes ||--o{ students : enrolls
-    subjects ||--o{ learning_outcomes : defines
-```
-
-### 4.2 People Management
-
-```mermaid
-erDiagram
-    students ||--o{ student_contacts : has
-    students }o--|| guardians : "M:N student_guardian"
-    staff }o--|| staff_roles : has_role
-```
-
-### 4.3 Staff Assignments
-
-```mermaid
-erDiagram
-    staff ||--o{ class_teacher : assigned_as
-    staff ||--o{ subject_teacher : teaches
-    classes ||--o{ class_teacher : assigned
-    classes ||--o{ subject_teacher : assigned
-    subjects ||--o{ subject_teacher : assigned
-    terms ||--o{ class_teacher : defines
-    terms ||--o{ subject_teacher : defines
-```
-
-### 4.4 Finance
-
-```mermaid
-erDiagram
-    classes ||--o{ fee_structure : has_fees
-    fee_types ||--o{ fee_structure : categorized_as
-    terms ||--o{ fee_structure : applies
-    students ||--o{ payments : makes
     fee_structure ||--o{ payments : billed_against
     payments ||--|| payment_receipts : generates
-    staff ||--o{ payment_receipts : issues
-```
-
-### 4.5 Academics & Assessment
-
-```mermaid
-erDiagram
-    terms ||--o{ exams : schedules
     exams ||--o{ exam_results : produces
-    students ||--o{ exam_results : achieves
-    subjects ||--o{ exam_results : assessed_in
-    subjects ||--o{ learning_outcomes : defines
-    generic_skills ||--o{ skill_assessments : rated_in
-    terms ||--o{ skill_assessments : evaluates
-    students ||--o{ skill_assessments : assesses
-```
-
-### 4.6 Daily Operations
-
-```mermaid
-erDiagram
-    students ||--o{ attendance : records
-    staff ||--o{ attendance : recorded_by
-    terms ||--o{ attendance : tracks
-    students ||--o{ book_loans : borrows
     books ||--o{ book_loans : loaned
-    staff ||--o{ notices : posts
+    generic_skills ||--o{ skill_assessments : rated_in
+    subjects ||--o{ learning_outcomes : defines
 ```
 
-### 4.7 Student Lifecycle
-
-```mermaid
-erDiagram
-    students ||--o{ enrollments : enrolls
-    students ||--o{ discipline_records : involves
-    students ||--o{ promotion_records : promotes
-    students ||--o{ repetition_records : repeats
-    students ||--o{ transfer_records : transfers
-```
-
-### 4.8 Timetable
-
-```mermaid
-erDiagram
-    classes ||--o{ timetable_slots : schedules
-    staff ||--o{ timetable_slots : assigned
-```
+**Rendered image:** [erd-draft.png](./erd-draft.png)
 
 ---
 
