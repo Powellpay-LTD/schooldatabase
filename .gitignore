@@ -1,0 +1,33 @@
+# Node / npm (used for Mermaid rendering)
+node_modules/
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE / editor
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Database (SQLite if used)
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+
+# Temporary render scripts
+render-*.js
+render-*.py
