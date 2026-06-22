@@ -51,8 +51,9 @@
 | 27 | `repetition_records` | Student repeating a class | **Planned** |
 | 28 | `transfer_records` | Student transfers in/out | **Planned** |
 | 29 | `timetable_slots` | Class-teacher-subject-period schedule | **Planned** |
+| 30 | `learning_outcomes` | CBC themes/topics per subject, with competencies & assessment criteria | **Planned** |
 
-**Total: 29 entities** (18 existing, 11 planned)
+**Total: 30 entities** (18 existing, 12 planned)
 
 ---
 
@@ -184,6 +185,8 @@ erDiagram
     books ||--o{ book_loans : loaned
 
     generic_skills ||--o{ skill_assessments : rated_in
+
+    subjects ||--o{ learning_outcomes : defines
 ```
 
 ---
@@ -217,6 +220,7 @@ erDiagram
 | student | repeats | repetition_record | 1:N | Mary repeated S1 in 2025 |
 | student | transfers | transfer_record | 1:N | Peter transferred from School X |
 | class | schedules | timetable_slot | 1:N | S1 East has 40 weekly timetable slots |
+| subject | defines | learning_outcome | 1:N | Math has 8 themes (Algebra, Geometry, Statistics, ...) |
 
 ---
 
@@ -253,6 +257,7 @@ notices           → Posted as needed
 enrollments       → Recorded per academic year
 discipline_records→ Recorded per incident
 skill_assessments → Recorded per term
+learning_outcomes → Defined per subject, updated with curriculum
 timetable_slots   → Created per term
 promotion_records → Recorded year-end
 repetition_records→ Recorded year-end
@@ -302,3 +307,4 @@ transfer_records  → Recorded per transfer
 | `repetition_records` | 📋 | No SQL table yet |
 | `transfer_records` | 📋 | No SQL table yet |
 | `timetable_slots` | 📋 | No SQL table yet |
+| `learning_outcomes` | 📋 | CBC themes/topics per subject with competencies |

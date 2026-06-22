@@ -1,0 +1,315 @@
+School Management System - Database Design Requirements
+Project Overview
+Building a School Management System (SSMS) for Ugandan schools following the new Competency-Based Curriculum (CBC).
+
+Core Requirements
+1. System Modules (13 Total)
+Users & Roles
+
+School Calendar
+
+Staff Management
+
+Students & Guardians
+
+Curriculum Management
+
+Assessment & Grading
+
+Report Cards
+
+Attendance
+
+Timetable
+
+Finance
+
+Discipline
+
+Library
+
+Announcements
+
+2. CBC Context (Uganda)
+Rolled out starting S1 in 2020
+
+First UCE cohort under CBC sat in 2024
+
+Subjects have themes/topics with specific learning outcomes (competencies)
+
+Continuous Assessment (CA) AND summative exams
+
+No learner "fails" outright - certificate requires at least a D in one subject
+
+Generic Skills rated every term (Beginning → Developing → Proficient → Mastery)
+
+3. Grading System
+A = Exceptional
+
+B = Outstanding
+
+C = Satisfactory
+
+D = Basic
+
+E = Elementary
+
+Final Score = CA score + End of Term score
+
+Database Tables Required
+Core Student Tables
+students
+
+student number
+
+name
+
+gender
+
+date of birth
+
+class
+
+enrollment date
+
+status
+
+student_contacts
+
+guardian names
+
+phone numbers
+
+relationship
+
+emergency contact
+
+Academic Structure
+classes
+
+class name
+
+stream
+
+level (Primary/Secondary/A-Level)
+
+capacity
+
+subjects
+
+subject name
+
+subject code (MTH, ENG, PHY)
+
+[Additional CBC-specific fields needed]
+
+terms
+
+term name
+
+academic year
+
+start date
+
+end date
+
+active status
+
+Staff
+staff
+
+staff number
+
+names
+
+role (Teacher/Bursar/Admin/Head Teacher)
+
+phone
+
+email
+
+hire date
+
+class_teacher
+
+which teacher assigned to which class per term
+
+subject_teacher
+
+which teacher teaches which subject in which class
+
+Fees & Payments
+fee_types
+
+Tuition
+
+Development Fee
+
+PTA
+
+Sports
+
+Computer Lab
+
+Lunch
+
+Transport
+
+Uniform
+
+fee_structure
+
+how much each class pays per fee type per term
+
+payments
+
+payment code
+
+student
+
+amount paid
+
+date
+
+method (Cash/Mobile Money/Bank/Cheque)
+
+reference number
+
+payment_receipts
+
+receipt number linked to each payment
+
+who issued it
+
+Attendance
+attendance
+
+student
+
+date
+
+status (Present/Absent/Late/Excused)
+
+recorded by
+
+Exams & Results
+exams
+
+exam name
+
+type (End of Term/Continuous Assessment/Mock/UNEB)
+
+term
+
+exam_results
+
+marks
+
+total marks
+
+grade per student per subject per exam
+
+Library (Optional)
+books
+
+ISBN
+
+title
+
+author
+
+subject
+
+copies available
+
+book_loans
+
+who borrowed what
+
+loan date
+
+due date
+
+return date
+
+fine amount
+
+Communication
+notices
+
+title
+
+content
+
+audience (Students/Parents/Staff/All)
+
+posted date
+
+expiry
+
+Additional CBC-Specific Requirements
+generic_skills
+
+Skill name/type
+
+Rating scale (Beginning/Developing/Proficient/Mastery)
+
+Student rating per term
+
+learning_outcomes
+
+Subject themes/topics
+
+Specific competencies per theme
+
+Assessment criteria
+
+Priority Tables (Build First)
+classes
+
+students
+
+terms
+
+fee_types
+
+fee_structure
+
+payments
+
+payment_receipts
+
+Design Considerations
+18 tables total identified
+
+CBC curriculum requires tracking of competencies, not just grades
+
+Need to handle continuous assessment separately from end of term exams
+
+Generic skills must be rated each term
+
+Students belong to one stream per academic year
+
+Students can have multiple guardians (many-to-many relationship)
+
+Staff members have specific roles and permissions
+
+Expected Outputs Per Issue
+CREATE TABLE statements with naming conventions
+
+Realistic sample data (Uganda context - real subjects, names, terms)
+
+Working queries that answer specific questions
+
+Design write-up explaining choices and alternatives considered
+
+Research citations for CBC/UNEB content
+
+Workflow Requirements
+One branch per issue
+
+PRs reviewed by teammate before merging
+
+Documentation of design trade-offs
+
+Iterative design - revising earlier tables as new requirements appear
