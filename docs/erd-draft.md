@@ -191,7 +191,101 @@ erDiagram
 
 ---
 
-## 4. Relationship Matrix with Cardinalities
+## 4. Module Breakdown (sub-diagrams)
+
+### 4.1 Core Academic Structure
+
+```mermaid
+erDiagram
+    academic_years ||--o{ terms : contains
+    terms ||--o{ enrollments : belongs_to
+    classes ||--o{ students : enrolls
+    subjects ||--o{ learning_outcomes : defines
+```
+
+### 4.2 People Management
+
+```mermaid
+erDiagram
+    students ||--o{ student_contacts : has
+    students }o--|| guardians : "M:N student_guardian"
+    staff }o--|| staff_roles : has_role
+```
+
+### 4.3 Staff Assignments
+
+```mermaid
+erDiagram
+    staff ||--o{ class_teacher : assigned_as
+    staff ||--o{ subject_teacher : teaches
+    classes ||--o{ class_teacher : assigned
+    classes ||--o{ subject_teacher : assigned
+    subjects ||--o{ subject_teacher : assigned
+    terms ||--o{ class_teacher : defines
+    terms ||--o{ subject_teacher : defines
+```
+
+### 4.4 Finance
+
+```mermaid
+erDiagram
+    classes ||--o{ fee_structure : has_fees
+    fee_types ||--o{ fee_structure : categorized_as
+    terms ||--o{ fee_structure : applies
+    students ||--o{ payments : makes
+    fee_structure ||--o{ payments : billed_against
+    payments ||--|| payment_receipts : generates
+    staff ||--o{ payment_receipts : issues
+```
+
+### 4.5 Academics & Assessment
+
+```mermaid
+erDiagram
+    terms ||--o{ exams : schedules
+    exams ||--o{ exam_results : produces
+    students ||--o{ exam_results : achieves
+    subjects ||--o{ exam_results : assessed_in
+    subjects ||--o{ learning_outcomes : defines
+    generic_skills ||--o{ skill_assessments : rated_in
+    terms ||--o{ skill_assessments : evaluates
+    students ||--o{ skill_assessments : assesses
+```
+
+### 4.6 Daily Operations
+
+```mermaid
+erDiagram
+    students ||--o{ attendance : records
+    staff ||--o{ attendance : recorded_by
+    terms ||--o{ attendance : tracks
+    students ||--o{ book_loans : borrows
+    books ||--o{ book_loans : loaned
+    staff ||--o{ notices : posts
+```
+
+### 4.7 Student Lifecycle
+
+```mermaid
+erDiagram
+    students ||--o{ enrollments : enrolls
+    students ||--o{ discipline_records : involves
+    students ||--o{ promotion_records : promotes
+    students ||--o{ repetition_records : repeats
+    students ||--o{ transfer_records : transfers
+```
+
+### 4.8 Timetable
+
+```mermaid
+erDiagram
+    classes ||--o{ timetable_slots : schedules
+    staff ||--o{ timetable_slots : assigned
+```
+
+---
+
+## 5. Relationship Matrix with Cardinalities
 
 | Entity A | Relationship | Entity B | Cardinality | Example |
 |----------|-------------|----------|-------------|---------|
@@ -224,7 +318,7 @@ erDiagram
 
 ---
 
-## 5. Reference vs Transactional Classification
+## 6. Reference vs Transactional Classification
 
 ### Reference / Lookup (rarely changes)
 ```
@@ -266,7 +360,7 @@ transfer_records  → Recorded per transfer
 
 ---
 
-## 6. Entity State Legend
+## 7. Entity State Legend
 
 | Badge | Meaning |
 |-------|---------|
