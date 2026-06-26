@@ -1,0 +1,381 @@
+Table roles {
+  id int [pk, increment]
+  name varchar [unique, not null]
+  description text
+}
+
+Table users {
+  id int [pk, increment]
+  role_id int [not null]
+  full_name varchar
+  email varchar [unique]
+  password_hash varchar
+  is_active boolean
+  created_at timestamp
+}
+
+Table staff {
+  id int [pk, increment]
+  user_id int [unique]
+  staff_number varchar [unique]
+  designation varchar
+  phone varchar
+  employment_status varchar
+  joined_at date
+}
+
+Table academic_years {
+  id int [pk, increment]
+  name varchar
+  start_date date
+  end_date date
+  is_current boolean
+}
+
+Table terms {
+  id int [pk, increment]
+  academic_year_id int
+  term_number int
+  start_date date
+  end_date date
+  is_current boolean
+}
+
+Table class_levels {
+  id int [pk, increment]
+  name varchar
+  sort_order int
+}
+
+Table streams {
+  id int [pk, increment]
+  class_level_id int
+  academic_year_id int
+  class_teacher_id int
+  name varchar
+}
+
+Table students {
+  id int [pk, increment]
+  user_id int
+  admission_number varchar [unique]
+  full_name varchar
+  date_of_birth date
+  gender varchar
+  status varchar
+}
+
+Table guardians {
+  id int [pk, increment]
+  full_name varchar
+  phone varchar
+  email varchar
+  relationship varchar
+}
+
+Table student_guardians {
+  student_id int
+  guardian_id int
+  is_primary_contact boolean
+
+  indexes {
+    (student_id, guardian_id) [pk]
+  }
+}
+
+Table enrollments {
+  id int [pk, increment]
+  student_id int
+  stream_id int
+  academic_year_id int
+  enrolled_at timestamp
+}
+
+Table subjects {
+  id int [pk, increment]
+  name varchar
+  code varchar [unique]
+  subject_type varchar
+}
+
+Table class_subjects {
+  id int [pk, increment]
+  class_level_id int
+  subject_id int
+  is_core boolean
+  teaching_periods_per_week int
+}
+
+Table learner_electives {
+  id int [pk, increment]
+  student_id int
+  subject_id int
+  term_id int
+}
+
+Table subject_teacher_assignments {
+  id int [pk, increment]
+  staff_id int
+  subject_id int
+  stream_id int
+  term_id int
+}
+
+Table themes {
+  id int [pk, increment]
+  subject_id int
+  class_level_id int
+  name varchar
+}
+
+Table learning_outcomes {
+  id int [pk, increment]
+  theme_id int
+  description text
+}
+
+Table generic_skills {
+  id int [pk, increment]
+  name varchar
+  description text
+}
+
+Table skill_rating_levels {
+  id int [pk, increment]
+  generic_skill_id int
+  level_value int
+  label varchar
+}
+
+Table assessments {
+  id int [pk, increment]
+  student_id int
+  subject_id int
+  term_id int
+  stream_id int
+  assessment_type varchar
+  title varchar
+  score decimal
+  max_score decimal
+  recorded_by int
+  recorded_at timestamp
+}
+
+Table grading_scale {
+  id int [pk, increment]
+  grade char
+  min_score decimal
+  max_score decimal
+  descriptor varchar
+}
+
+Table subject_term_results {
+  id int [pk, increment]
+  student_id int
+  subject_id int
+  term_id int
+  ca_score decimal
+  eot_score decimal
+  final_score decimal
+  grade char
+}
+
+Table generic_skill_ratings {
+  id int [pk, increment]
+  student_id int
+  generic_skill_id int
+  term_id int
+  stream_id int
+  rating_level_id int
+  rated_by int
+}
+
+Table report_cards {
+  id int [pk, increment]
+  student_id int
+  term_id int
+  stream_id int
+  days_present int
+  days_absent int
+  class_teacher_comment text
+  head_teacher_comment text
+}
+
+Table attendance {
+  id int [pk, increment]
+  student_id int
+  stream_id int
+  term_id int
+  date date
+  status varchar
+  recorded_by int
+}
+
+Table periods {
+  id int [pk, increment]
+  day_of_week int
+  period_num int
+  start_time time
+  end_time time
+}
+
+Table timetable {
+  id int [pk, increment]
+  stream_id int
+  subject_id int
+  staff_id int
+  period_id int
+  term_id int
+}
+
+Table fee_structures {
+  id int [pk, increment]
+  class_level_id int
+  term_id int
+  amount decimal
+  description varchar
+}
+
+Table invoices {
+  id int [pk, increment]
+  student_id int
+  fee_structure_id int
+  term_id int
+  amount_due decimal
+  issued_at timestamp
+}
+
+Table payments {
+  id int [pk, increment]
+  invoice_id int
+  amount_paid decimal
+  payment_method varchar
+ reference_number varchar
+  paid_at timestamp
+}
+
+Table discipline_records {
+  id int [pk, increment]
+  student_id int
+  recorded_by int
+  incident_date date
+  description text
+  action_taken varchar
+}
+
+Table books {
+  id int [pk, increment]
+  title varchar
+  author varchar
+  isbn varchar
+  total_copies int
+}
+
+Table book_loans {
+  id int [pk, increment]
+  book_id int
+  borrower_type varchar
+  borrower_id int
+  loaned_at timestamp
+  due_date date
+  returned_at timestamp
+}
+
+Table announcements {
+  id int [pk, increment]
+  created_by int
+  role_id int
+  title varchar
+  body text
+  expires_at datetime
+  created_at timestamp
+}
+
+/* Relationships */
+
+Ref: users.role_id > roles.id
+
+Ref: staff.user_id > users.id
+
+Ref: students.user_id > users.id
+
+Ref: terms.academic_year_id > academic_years.id
+
+Ref: streams.class_level_id > class_levels.id
+Ref: streams.academic_year_id > academic_years.id
+Ref: streams.class_teacher_id > staff.id
+
+Ref: student_guardians.student_id > students.id
+Ref: student_guardians.guardian_id > guardians.id
+
+Ref: enrollments.student_id > students.id
+Ref: enrollments.stream_id > streams.id
+Ref: enrollments.academic_year_id > academic_years.id
+
+Ref: class_subjects.class_level_id > class_levels.id
+Ref: class_subjects.subject_id > subjects.id
+
+Ref: learner_electives.student_id > students.id
+Ref: learner_electives.subject_id > subjects.id
+Ref: learner_electives.term_id > terms.id
+
+Ref: subject_teacher_assignments.staff_id > staff.id
+Ref: subject_teacher_assignments.subject_id > subjects.id
+Ref: subject_teacher_assignments.stream_id > streams.id
+Ref: subject_teacher_assignments.term_id > terms.id
+
+Ref: themes.subject_id > subjects.id
+Ref: themes.class_level_id > class_levels.id
+
+Ref: learning_outcomes.theme_id > themes.id
+
+Ref: skill_rating_levels.generic_skill_id > generic_skills.id
+
+Ref: assessments.student_id > students.id
+Ref: assessments.subject_id > subjects.id
+Ref: assessments.term_id > terms.id
+Ref: assessments.stream_id > streams.id
+Ref: assessments.recorded_by > staff.id
+
+Ref: subject_term_results.student_id > students.id
+Ref: subject_term_results.subject_id > subjects.id
+Ref: subject_term_results.term_id > terms.id
+
+Ref: generic_skill_ratings.student_id > students.id
+Ref: generic_skill_ratings.generic_skill_id > generic_skills.id
+Ref: generic_skill_ratings.term_id > terms.id
+Ref: generic_skill_ratings.stream_id > streams.id
+Ref: generic_skill_ratings.rating_level_id > skill_rating_levels.id
+Ref: generic_skill_ratings.rated_by > staff.id
+
+Ref: report_cards.student_id > students.id
+Ref: report_cards.term_id > terms.id
+Ref: report_cards.stream_id > streams.id
+
+Ref: attendance.student_id > students.id
+Ref: attendance.stream_id > streams.id
+Ref: attendance.term_id > terms.id
+Ref: attendance.recorded_by > staff.id
+
+Ref: timetable.stream_id > streams.id
+Ref: timetable.subject_id > subjects.id
+Ref: timetable.staff_id > staff.id
+Ref: timetable.period_id > periods.id
+Ref: timetable.term_id > terms.id
+
+Ref: fee_structures.class_level_id > class_levels.id
+Ref: fee_structures.term_id > terms.id
+
+Ref: invoices.student_id > students.id
+Ref: invoices.fee_structure_id > fee_structures.id
+Ref: invoices.term_id > terms.id
+
+Ref: payments.invoice_id > invoices.id
+
+Ref: discipline_records.student_id > students.id
+Ref: discipline_records.recorded_by > staff.id
+
+Ref: book_loans.book_id > books.id
+
+Ref: announcements.created_by > staff.id
+Ref: announcements.role_id > roles.id
