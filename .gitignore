@@ -31,3 +31,7 @@ Thumbs.db
 # Temporary render scripts
 render-*.js
 render-*.py
+
+# Internship personal logs
+internship_log_*.md
+log_*.md
